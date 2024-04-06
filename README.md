@@ -1,6 +1,6 @@
 ## Dripcast
 
-![logo](./public/dripcast.png)
+<img src="./public/dripcast.png" alt="logo" height="150" width="100">
 
 ### What does it do
 
