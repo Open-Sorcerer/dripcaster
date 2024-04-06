@@ -1,28 +1,28 @@
-'use client';
-import {AddBtn, Card, StatsCard} from '@/components';
-import {publicClient} from '@/config';
-import {FarcasterIcon} from '@/icons';
-import {podsABI, podsContractAddress} from '@/utils';
-import {usePrivy, useWallets} from '@privy-io/react-auth';
-import {NextPage} from 'next';
-import {useEffect, useState} from 'react';
-import {formatEther} from 'viem';
-import {peasABI} from '@/utils';
+"use client";
+import { AddBtn, Card, StatsCard } from "@/components";
+import { publicClient } from "@/config";
+import { FarcasterIcon } from "@/icons";
+import { podsABI, podsContractAddress } from "@/constant";
+import { NextPage } from "next";
+import { useEffect, useState } from "react";
+import { formatEther } from "viem";
+import { peasABI } from "@/constant";
+import { useAccount } from "wagmi";
 
 const statsData = [
   {
-    label: 'Total Products',
-    desc: 'Total number of products you have in your store',
+    label: "Total Products",
+    desc: "Total number of products you have in your store",
     value: 16,
   },
   {
-    label: 'Total Sales',
-    desc: 'Total number of products sold',
+    label: "Total Sales",
+    desc: "Total number of products sold",
     value: 9,
   },
   {
-    label: 'Total Revenue',
-    desc: 'Total revenue generated from sales',
+    label: "Total Revenue",
+    desc: "Total revenue generated from sales",
     value: 569,
   },
 ];
@@ -38,19 +38,17 @@ interface Products {
 const Products: NextPage = () => {
   const [productsData, setProductsData] = useState<any>();
   const [products, setProducts] = useState<any>([]);
-  const {wallets} = useWallets();
-  const {user} = usePrivy();
   const [totalSoldUnits, setTotalSoldUnits] = useState<any>([]);
   const [totalRevenue, setTotalRevenue] = useState<any>([]);
+  const { address } = useAccount();
   const readData = async () => {
-    if (user) {
-      const wallet = wallets[0]?.address;
+    if (address) {
       try {
         const productsData = await publicClient.readContract({
           address: podsContractAddress,
           abi: podsABI,
-          functionName: 'getProducts',
-          args: [wallet],
+          functionName: "getProducts",
+          args: [address],
         });
         fetchData(productsData);
       } catch (e) {
@@ -77,15 +75,15 @@ const Products: NextPage = () => {
   };
 
   const soldUnits = async (products: Products[]) => {
-    if (user) {
+    if (address) {
       try {
         let total = 0;
         for (let index = 0; index < products.length; index++) {
           const product = products[index];
           const soldUnits = await publicClient.readContract({
-            address: product.productAddress as '0xString',
+            address: product.productAddress as "0xString",
             abi: peasABI,
-            functionName: 'soldUnits',
+            functionName: "soldUnits",
             args: [],
           });
           total += Number(soldUnits);
@@ -98,15 +96,15 @@ const Products: NextPage = () => {
   };
 
   const revenueShare = async (products: Products[]) => {
-    if (user) {
+    if (address) {
       try {
         let total = 0;
         for (let index = 0; index < products.length; index++) {
           const product = products[index];
           const revenue = await publicClient.readContract({
-            address: product.productAddress as '0xString',
+            address: product.productAddress as "0xString",
             abi: peasABI,
-            functionName: 'revenueGenerated',
+            functionName: "revenueGenerated",
             args: [],
           });
           total += Number(formatEther(revenue as bigint));
@@ -119,10 +117,10 @@ const Products: NextPage = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (address) {
       readData();
     }
-  }, [user]);
+  }, [address]);
 
   return (
     <div className="flex-1 w-full pt-40 pb-5 px-5 md:px-40 overflow-visible flex flex-col justify-start items-start">
@@ -130,7 +128,7 @@ const Products: NextPage = () => {
         <div className="relative flex place-items-center before:absolute before:h-[50px] before:w-[180px] sm:before:h-[200px] md:before:w-[780px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[200px] sm:after:h-[180px] sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-teal-200 after:via-teal-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-teal-500 before:dark:opacity-10 after:dark:from-teal-400 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[260px] z-[-1]">
           <h1 className="text-5xl lg:text-6xl text-white font-title">Your growth</h1>
         </div>
-        {user ? (
+        {address ? (
           <>
             <div className="w-full flex flex-col sm:flex-row justify-end items-center z-0">
               <AddBtn />
@@ -170,7 +168,7 @@ const Products: NextPage = () => {
             </div>
           </>
         ) : (
-          <h1 className="text-2xl font-primary text-amber-400">Please connect Farcaster!!</h1>
+          <h1 className="text-2xl font-primary text-amber-400">Please connect you wallet!</h1>
         )}
       </div>
     </div>

@@ -3,12 +3,10 @@
 import { NextPage } from "next";
 import { Checkbox, Input, Search, Upload } from "@/components";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { usePrivy, useWallets } from "@privy-io/react-auth";
-import { ethers } from "ethers";
+import { useState } from "react";
 import { parseUnits } from "viem";
 import toast from "react-hot-toast";
-import { podsABI, podsContractAddress } from "@/utils";
+import { useAccount } from "wagmi";
 
 const collection = [
   {
@@ -71,8 +69,7 @@ const CreateProduct: NextPage = () => {
   const [isContentUploading, setIsContentUploading] = useState<boolean>(false);
   const [isImageUploading, setIsImageUploading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { wallets } = useWallets();
-  const { user } = usePrivy();
+  const { address } = useAccount();
 
   const handleCardSelect = (card: any) => {
     const isSelected = selectedCards.some((selectedCard) => selectedCard.name === card.name);
@@ -169,50 +166,32 @@ const CreateProduct: NextPage = () => {
     });
   }
 
-  async function getReputationScore(username: string) {
-    const res = await fetch("/api/karma3", {
-      method: "POST",
-      body: JSON.stringify(username),
-    });
-    const data = await res.json();
-    setScore(data?.score!);
-  }
-
   async function createProduct(metadataURL: string) {
     if (score > 60) {
       setIsLoading(true);
-      const wallet = wallets[0];
-      const provider = await wallet.getEthersProvider();
-      await wallet.switchChain(84532);
-      const signer = provider.getSigner();
-      const podsContract = new ethers.Contract(podsContractAddress, podsABI, signer);
+      // const signer = provider.getSigner();
+      // const podsContract = new ethers.Contract(podsContractAddress, podsABI, signer);
       const amount = parseUnits(price.toString(), 18);
-      const product = await podsContract.createProduct(
-        wallet.address,
-        name,
-        imageUrl,
-        metadataURL,
-        amount,
-        maxSupplyFlag,
-        supply,
-      );
+      // const product = await podsContract.createProduct(
+      //   address,
+      //   name,
+      //   imageUrl,
+      //   metadataURL,
+      //   amount,
+      //   maxSupplyFlag,
+      //   supply,
+      // );
       toast.success("Product Created Successfully", {
         icon: "🎉",
         style: {
           borderRadius: "10px",
         },
       });
-      const contractAddress = await podsContract.getProducts(wallet.address);
-      await createGate(name, contractAddress[contractAddress.length - 1].productAddress);
+      // const contractAddress = await podsContract.getProducts(wallet.address);
+      // await createGate(name, contractAddress[contractAddress.length - 1].productAddress);
       setIsLoading(false);
     }
   }
-
-  useEffect(() => {
-    if (user) {
-      getReputationScore(user.farcaster?.username!);
-    }
-  }, [user]);
 
   return (
     <div className="flex-1 w-full pt-40 pb-10 px-5 md:px-40 flex flex-col justify-start items-start">
@@ -313,11 +292,11 @@ const CreateProduct: NextPage = () => {
           <button
             onClick={async (e) => {
               e.preventDefault();
-              if (user) {
+              if (address) {
                 const metadataURL = await uploadMetadata();
                 createProduct(metadataURL);
               } else {
-                toast.error("Please connect your farcaster to create a product", {
+                toast.error("Please connect your wallet to create a product", {
                   icon: "🔒",
                   style: {
                     borderRadius: "10px",

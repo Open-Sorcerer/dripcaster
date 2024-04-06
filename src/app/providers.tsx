@@ -1,26 +1,17 @@
-'use client';
+"use client";
 
-import {PrivyProvider} from '@privy-io/react-auth';
-import {baseSepolia} from 'viem/chains';
+import { config } from "@/utils";
+import { WagmiProvider } from "wagmi";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ConnectKitProvider } from "connectkit";
 
-export default function Providers({children}: {children: React.ReactNode}) {
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = new QueryClient();
   return (
-    <PrivyProvider
-      appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID!}
-      config={{
-        appearance: {
-          theme: 'dark',
-          accentColor: '#676FFF',
-          logo: '/dripcast.png',
-        },
-        defaultChain: baseSepolia,
-        loginMethods: ['farcaster'],
-        embeddedWallets: {
-          createOnLogin: 'all-users',
-        },
-      }}
-    >
-      {children}
-    </PrivyProvider>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <ConnectKitProvider>{children}</ConnectKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }

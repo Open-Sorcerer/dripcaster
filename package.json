@@ -13,11 +13,7 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "@dynamic-labs/ethereum": "^1.4.1",
-    "@dynamic-labs/sdk-react-core": "^1.4.1",
     "@pinata/sdk": "^2.1.0",
-    "@privy-io/react-auth": "^1.59.5",
-    "@privy-io/wagmi": "^0.2.2",
     "@tanstack/react-query": "^5.28.6",
     "axios": "^1.6.8",
     "connectkit": "^1.7.2",

@@ -1,6 +1,3 @@
-import {podsABI} from './abi';
-import {peasABI} from './abi';
-import {podsContractAddress} from './constants';
-import {peasContractAddress} from './constants';
+import { config } from "./wagmi";
 
-export {podsABI, peasABI, podsContractAddress, peasContractAddress};
+export { config };
