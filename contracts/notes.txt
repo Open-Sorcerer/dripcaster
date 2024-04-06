@@ -2,7 +2,7 @@ Deployed on BaseSepolia
 
 DripCaster = "0xcF271719Ff9258637Db6e9E4C9b793e59FBc9827"
 
-Drips = "0x97C37A5fa154061BD410dd67D6Ec73280A2F0252"
+Drips = "0x001323Cd1396C87b2E24c33dE6d5174cEE9A5635"
 
 Testing = "https://ipfs.moralis.io:2053/ipfs/Qma4X1NYjE5sA8Z6gYEQwentwAc11t2jXt9g3Lmh3b5P2r"
 
