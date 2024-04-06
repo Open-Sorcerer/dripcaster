@@ -1,8 +1,6 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-/* eslint-disable @next/next/no-img-element -- To avoid img element warning */
-import React from 'react';
+"use client";
+import Image from "next/image";
+import React from "react";
 
 interface Card {
   name: string;
@@ -12,13 +10,13 @@ interface Card {
   link: string;
 }
 
-const Card = ({name, price, image, label, link}: Card) => {
+const Card = ({ name, price, image, label, link }: Card) => {
   return (
     <div className="flex flex-col w-fit bg-[#141414] bg-opacity-20 backdrop-filter backdrop-blur-sm rounded-xl shadow-md p-6">
       <Image
         src={
-          image === ''
-            ? 'https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC'
+          image === ""
+            ? "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC"
             : image
         }
         alt={name}
@@ -33,7 +31,7 @@ const Card = ({name, price, image, label, link}: Card) => {
           onClick={() =>
             window.open(
               `https://warpcast.com/~/compose?embeds[]=https://onlyframe.vercel.app/frames?address=${link}`,
-              '_blank',
+              "_blank",
             )
           }
           className="bg-gradient-to-br from-[#ffd84b] from-[20%] to-[#b67e2b] hover:from-[#ffd643] hover:from-[20%] hover:to-[#c18d40] font-primary font-medium items-center rounded-lg px-5 py-1.5 cursor-pointer"

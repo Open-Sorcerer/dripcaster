@@ -1,7 +1,7 @@
 "use client";
 
 import { NextPage } from "next";
-import { Checkbox, Input, Upload } from "@/components";
+import { Checkbox, Input, Search, Upload } from "@/components";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
@@ -9,6 +9,49 @@ import { ethers } from "ethers";
 import { parseUnits } from "viem";
 import toast from "react-hot-toast";
 import { podsABI, podsContractAddress } from "@/utils";
+
+const collection = [
+  {
+    name: "Azuki Elementals",
+    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
+    address: "0x1234567890",
+  },
+  {
+    name: "Becaon",
+    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
+    address: "0x1234567890",
+  },
+  {
+    name: "James",
+    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
+    address: "0x1234567890",
+  },
+  {
+    name: "Die hard",
+    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
+    address: "0x1234567890",
+  },
+  {
+    name: "Zeo",
+    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
+    address: "0x1234567890",
+  },
+  {
+    name: "Milano",
+    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
+    address: "0x1234567890",
+  },
+  {
+    name: "Bored Ape",
+    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
+    address: "0x1234567890",
+  },
+  {
+    name: "Madlad",
+    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
+    address: "0x1234567890",
+  },
+];
 
 const CreateProduct: NextPage = () => {
   const [name, setName] = useState<string>("");
@@ -20,13 +63,26 @@ const CreateProduct: NextPage = () => {
   const [contentUrl, setContentUrl] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [supply, setSupply] = useState<number>(10);
+  const [showDialog, setShowDialog] = useState<boolean>(false);
+  const [selectedCards, setSelectedCards] = useState<
+    { name: string; image: string; address: string }[]
+  >([]);
   const [maxSupplyFlag, setMaxSupplyFlag] = useState<boolean>(false);
   const [isContentUploading, setIsContentUploading] = useState<boolean>(false);
   const [isImageUploading, setIsImageUploading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [metadataURL, setMetadataURL] = useState<string>("");
   const { wallets } = useWallets();
   const { user } = usePrivy();
+
+  const handleCardSelect = (card: any) => {
+    const isSelected = selectedCards.some((selectedCard) => selectedCard.name === card.name);
+
+    if (isSelected) {
+      setSelectedCards(selectedCards.filter((selectedCard) => selectedCard.name !== card.name));
+    } else {
+      setSelectedCards([...selectedCards, card]);
+    }
+  };
 
   const uploadMetadata = async () => {
     const body = {
@@ -39,7 +95,6 @@ const CreateProduct: NextPage = () => {
       body: JSON.stringify(body),
     });
     const data = await res.json();
-    setMetadataURL(`https://gateway.pinata.cloud/ipfs/${data.hash}`);
     return `https://gateway.pinata.cloud/ipfs/${data.hash}`;
   };
 
@@ -125,6 +180,7 @@ const CreateProduct: NextPage = () => {
 
   async function createProduct(metadataURL: string) {
     if (score > 60) {
+      setIsLoading(true);
       const wallet = wallets[0];
       const provider = await wallet.getEthersProvider();
       await wallet.switchChain(84532);
@@ -148,6 +204,7 @@ const CreateProduct: NextPage = () => {
       });
       const contractAddress = await podsContract.getProducts(wallet.address);
       await createGate(name, contractAddress[contractAddress.length - 1].productAddress);
+      setIsLoading(false);
     }
   }
 
@@ -238,6 +295,12 @@ const CreateProduct: NextPage = () => {
               onChange={(e) => setSupply(e.target.value)}
             />
           )}
+          <Search
+            onClick={() => {
+              setShowDialog(!showDialog);
+            }}
+            selectedCards={selectedCards}
+          />
           <Input
             id="price"
             name="price"
@@ -263,7 +326,7 @@ const CreateProduct: NextPage = () => {
               }
             }}
             className="w-full text-neutral-900 hover:text-neutral-800 bg-gradient-to-tr from-teal-400 to-sky-500 hover:from-teal-300 hover:to-sky-400 rounded-lg px-5 py-2.5 text-center font-medium shadow disabled:opacity-75 disabled:cursor-progress"
-            disabled={isImageUploading || isContentUploading}
+            disabled={isImageUploading || isContentUploading || isLoading}
           >
             {isImageUploading || isContentUploading
               ? "Uploading Image..."
@@ -271,6 +334,13 @@ const CreateProduct: NextPage = () => {
                 ? "Getting your product ready..."
                 : "Add product 🚀"}
           </button>
+          <Search.Dialog
+            isEnabled={showDialog}
+            setOutsideClick={setShowDialog}
+            collection={collection}
+            selectedCards={selectedCards}
+            onCardSelect={handleCardSelect}
+          />
         </form>
       </div>
     </div>

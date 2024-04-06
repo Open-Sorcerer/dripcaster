@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface IInput {
   id: string;
@@ -11,13 +11,13 @@ interface IInput {
   helper?: string;
 }
 
-const Input = ({id, name, label, placeholder, type, onChange, value, helper}: IInput) => {
+const Input = ({ id, name, label, placeholder, type, onChange, value, helper }: IInput) => {
   return (
     <div>
       <label
         htmlFor={id}
         className="text-gray-300 text-sm md:text-[1.2rem]"
-        style={{marginRight: 0}}
+        style={{ marginRight: 0 }}
       >
         {label}
       </label>
@@ -25,13 +25,13 @@ const Input = ({id, name, label, placeholder, type, onChange, value, helper}: II
         id={id}
         name={name}
         onChange={onChange}
-        className="mt-2 bg-[#141414]/20 border border-neutral-500 text-neutral-200 text-sm placeholder:text-gray-300 rounded-lg focus:border-neutral-300 focus:ring-neutral-300 active:border-neutral-400 active:ring-neutral-400 block w-full p-2.5"
+        className="mt-2 bg-[#141414]/20 border border-neutral-500 text-neutral-200 text-sm placeholder:text-neutral-500 rounded-lg focus:border-neutral-300 focus:ring-neutral-300 active:border-neutral-400 active:ring-neutral-400 block w-full p-2.5"
         placeholder={placeholder}
         type={type}
         value={value}
-        // required
+        required
       />
-      <div className="text-sm mt-1 text-gray-400">{helper}</div>
+      <div className="text-sm mt-1 text-neutral-400">{helper}</div>
     </div>
   );
 };
