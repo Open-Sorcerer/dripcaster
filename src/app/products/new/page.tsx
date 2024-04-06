@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import {NextPage} from 'next';
-import {Checkbox, Input, Upload} from '@/components';
-import Image from 'next/image';
-import {useEffect, useState} from 'react';
-import {usePrivy, useWallets} from '@privy-io/react-auth';
-import {ethers} from 'ethers';
-import {parseUnits} from 'viem';
-import toast from 'react-hot-toast';
-import {podsABI, podsContractAddress} from '@/utils';
+import { NextPage } from "next";
+import { Checkbox, Input, Upload } from "@/components";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { usePrivy, useWallets } from "@privy-io/react-auth";
+import { ethers } from "ethers";
+import { parseUnits } from "viem";
+import toast from "react-hot-toast";
+import { podsABI, podsContractAddress } from "@/utils";
 
 const CreateProduct: NextPage = () => {
-  const [name, setName] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [productImage, setProductImage] = useState<string>('');
-  const [contentImage, setContentImage] = useState<string>('');
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [productImage, setProductImage] = useState<string>("");
+  const [contentImage, setContentImage] = useState<string>("");
   const [score, setScore] = useState<number>(0);
-  const [imageUrl, setImageUrl] = useState<string>('');
-  const [contentUrl, setContentUrl] = useState<string>('');
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [contentUrl, setContentUrl] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [supply, setSupply] = useState<number>(10);
   const [maxSupplyFlag, setMaxSupplyFlag] = useState<boolean>(false);
   const [isContentUploading, setIsContentUploading] = useState<boolean>(false);
   const [isImageUploading, setIsImageUploading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [metadataURL, setMetadataURL] = useState<string>('');
-  const {wallets} = useWallets();
-  const {user} = usePrivy();
+  const [metadataURL, setMetadataURL] = useState<string>("");
+  const { wallets } = useWallets();
+  const { user } = usePrivy();
 
   const uploadMetadata = async () => {
     const body = {
@@ -34,8 +34,8 @@ const CreateProduct: NextPage = () => {
       image: imageUrl,
       description: description,
     };
-    const res = await fetch('/api/json', {
-      method: 'POST',
+    const res = await fetch("/api/json", {
+      method: "POST",
       body: JSON.stringify(body),
     });
     const data = await res.json();
@@ -49,9 +49,9 @@ const CreateProduct: NextPage = () => {
     setProductImage(image);
     try {
       const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/files', {
-        method: 'POST',
+      formData.append("file", file);
+      const res = await fetch("/api/files", {
+        method: "POST",
         body: formData,
       });
       const cid = await res.json();
@@ -70,9 +70,9 @@ const CreateProduct: NextPage = () => {
     setContentImage(image);
     try {
       const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/files', {
-        method: 'POST',
+      formData.append("file", file);
+      const res = await fetch("/api/files", {
+        method: "POST",
         body: formData,
       });
       const cid = await res.json();
@@ -85,11 +85,11 @@ const CreateProduct: NextPage = () => {
   };
 
   async function createGate(name: string, address: string) {
-    const res = await fetch('/api/dynamic', {
-      method: 'POST',
+    const res = await fetch("/api/dynamic", {
+      method: "POST",
       body: JSON.stringify({
         name: name,
-        outcome: 'scope',
+        outcome: "scope",
         rules: [
           {
             address: {
@@ -99,24 +99,24 @@ const CreateProduct: NextPage = () => {
             filter: {
               amount: 1,
             },
-            type: 'nft',
+            type: "nft",
           },
         ],
-        scope: 'superuser',
+        scope: "superuser",
       }),
     });
     const data = await res.json();
-    toast.success('Token Gate created successfully', {
-      icon: '🔑',
+    toast.success("Token Gate created successfully", {
+      icon: "🔑",
       style: {
-        borderRadius: '10px',
+        borderRadius: "10px",
       },
     });
   }
 
   async function getReputationScore(username: string) {
-    const res = await fetch('/api/karma3', {
-      method: 'POST',
+    const res = await fetch("/api/karma3", {
+      method: "POST",
       body: JSON.stringify(username),
     });
     const data = await res.json();
@@ -140,10 +140,10 @@ const CreateProduct: NextPage = () => {
         maxSupplyFlag,
         supply,
       );
-      toast.success('Product Created Successfully', {
-        icon: '🎉',
+      toast.success("Product Created Successfully", {
+        icon: "🎉",
         style: {
-          borderRadius: '10px',
+          borderRadius: "10px",
         },
       });
       const contractAddress = await podsContract.getProducts(wallet.address);
@@ -169,8 +169,8 @@ const CreateProduct: NextPage = () => {
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-10">
             <div className="flex flex-col items-center justify-center gap-5 mb-5">
               <Image
-                className="mx-auto w-[14rem] h-[14rem] bg-amber-500 rounded-lg object-fill"
-                src={productImage !== '' ? productImage : '/images/preview.png'}
+                className="mx-auto w-[14rem] h-[14rem] bg-gradient-to-tr from-teal-500 to-sky-400 rounded-lg object-fill"
+                src={productImage !== "" ? productImage : "/images/preview.png"}
                 alt="preview"
                 width={200}
                 height={200}
@@ -187,8 +187,8 @@ const CreateProduct: NextPage = () => {
             </div>
             <div className="flex flex-col items-center justify-center gap-5 mb-5">
               <Image
-                className="mx-auto w-[14rem] h-[14rem] bg-amber-500 rounded-lg object-fill"
-                src={contentImage !== '' ? contentImage : '/images/content.jpeg'}
+                className="mx-auto w-[14rem] h-[14rem] bg-gradient-to-bl from-teal-500 to-sky-400 rounded-lg object-fill"
+                src={contentImage !== "" ? contentImage : "/images/preview.png"}
                 alt="preview"
                 width={200}
                 height={200}
@@ -254,22 +254,22 @@ const CreateProduct: NextPage = () => {
                 const metadataURL = await uploadMetadata();
                 createProduct(metadataURL);
               } else {
-                toast.error('Please connect your farcaster to create a product', {
-                  icon: '🔒',
+                toast.error("Please connect your farcaster to create a product", {
+                  icon: "🔒",
                   style: {
-                    borderRadius: '10px',
+                    borderRadius: "10px",
                   },
                 });
               }
             }}
-            className="w-full text-[#fffff] bg-teal-400 hover:bg-teal-400/90 rounded-lg px-5 py-2.5 text-center font-medium shadow disabled:opacity-75 disabled:cursor-progress"
+            className="w-full text-neutral-900 hover:text-neutral-800 bg-gradient-to-tr from-teal-400 to-sky-500 hover:from-teal-300 hover:to-sky-400 rounded-lg px-5 py-2.5 text-center font-medium shadow disabled:opacity-75 disabled:cursor-progress"
             disabled={isImageUploading || isContentUploading}
           >
             {isImageUploading || isContentUploading
-              ? 'Uploading Image...'
+              ? "Uploading Image..."
               : isLoading
-                ? 'Getting your product ready...'
-                : 'Add product 🚀'}
+                ? "Getting your product ready..."
+                : "Add product 🚀"}
           </button>
         </form>
       </div>
