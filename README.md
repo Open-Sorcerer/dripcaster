@@ -1,16 +1,6 @@
-## OnlyFrames
+## Dripcast
 
-![logo](./public/onlyframes.png)
-
-[Frame](https://github.com/Open-Sorcerer/onlyframes)
-
-[Subgraph](https://github.com/Open-Sorcerer/only-frames-graph)
-
-Contract Addresses:
-
-[OnlyFrames](https://sepolia.basescan.org/address/0x3a0d973047624e06a78c3560cc120498406968d7) 
-
-[First Product](https://sepolia.basescan.org/address/0x9b55b00d4401C06ddbc7eAa682FB87DE99848486)
+![logo](./public/dripcast.png)
 
 ### What does it do
 
@@ -40,4 +30,4 @@ Contract Addresses:
 ### Future Features
 
 - Developing a mobile app for a better user experience.
-- Implementing social features like commenting, rating, and sharing of digital assets on top of Farcaster.
+- Implementing actions like commenting, rating, and sharing of digital assets on top of Farcaster.

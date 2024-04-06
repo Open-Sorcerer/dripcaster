@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>OnlyFrames</title>
-        <meta name="description" content="onlyframes" />
+        <title>Dripcast</title>
+        <meta name="description" content="Dripcast" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className="relative px-5 py-[10rem] overflow-hidden">
@@ -45,7 +45,7 @@ export default function Home() {
             </span>
           </h1>
           <p className="mt-5 max-w-2xl text-xl font-primary text-neutral-300">
-            OnlyFrames is a powerful, but simple, e-commerce platform that puts a wide selection of
+            Dripcast is a powerful, but simple, e-commerce platform that puts a wide selection of
             tools at your fingertips. Now you can sell the digital services you want—books,
             memberships, courses, and more—right to your audience on <b>Frames.</b>
           </p>

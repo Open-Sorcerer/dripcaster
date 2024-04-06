@@ -1,63 +1,18 @@
 'use client';
-import {Card} from '@/components';
-import axios from 'axios';
+
 import {NextPage} from 'next';
 import Head from 'next/head';
-import {useEffect, useState} from 'react';
-
-let data = JSON.stringify({
-  query: `{
-  ownershipTransferreds(first: 5) {
-    id
-    previousOwner
-    newOwner
-    blockNumber
-  }
-  productCreateds(first: 5) {
-    id
-    creator
-    product
-    blockNumber
-  }
-}`,
-  variables: {},
-});
-
-let config = {
-  method: 'post',
-  maxBodyLength: Infinity,
-  url: 'https://api.studio.thegraph.com/query/37601/onlyframesv3/v0.1',
-  headers: {
-    'Content-Type': 'application/json',
-    Cookie:
-      '__cf_bm=IbNdTRLZCgpC4nXRkRQy_tuhmbBMdas3fmkjm2DiJfk-1711267853-1.0.1.1-uljFti8Q56RcpolToLdMjgLe.zINnWDiA4UiQKnN.YiBzgvQ.pvbe6_.x09v3uXZno2_LKLHr6ntnIv1hyt4JA',
-  },
-  data: data,
-};
+import {useState} from 'react';
 
 const Discover: NextPage = () => {
   const [products, setProducts] = useState([]);
-  const [productsAddresses, setProductsAddresses] = useState();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  useEffect(() => {
-    setIsLoading(true);
-    axios
-      .request(config)
-      .then((response) => {
-        setProductsAddresses(response.data.data.productCreateds);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-      });
-  }, []);
 
   return (
     <>
       <Head>
         <title>Discover</title>
-        <meta name="description" content="onlyframes" />
+        <meta name="description" content="Dripcast" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="flex flex-col w-full pt-36 pb-20 md:pt-32 md:pb-6 lg:py-28 px-10 md:px-24">

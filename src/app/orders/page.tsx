@@ -64,7 +64,7 @@ const Discover: NextPage = () => {
     <>
       <Head>
         <title>Discover</title>
-        <meta name="description" content="onlyframes" />
+        <meta name="description" content="Dripcast" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="flex flex-col w-full pt-36 pb-20 md:pt-32 md:pb-6 lg:py-28 px-10 md:px-24">

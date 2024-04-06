@@ -2,6 +2,7 @@
 'use client';
 
 import {useLogin, useLogout, usePrivy, useWallets} from '@privy-io/react-auth';
+import Image from 'next/image';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {useEffect, useState} from 'react';
@@ -84,9 +85,10 @@ const Navbar = () => {
         <div className="flex">
           <Link
             href="/"
-            className="self-center text-2xl text-transparent bg-clip-text bg-gradient-to-b from-[#ffd84b] from-[20%] to-[#b67e2b] font-title font-semibold whitespace-nowrap"
+            className="flex flex-row gap-5 items-end text-2xl text-transparent bg-clip-text bg-gradient-to-b from-[#ffd84b] from-[20%] to-[#b67e2b] font-title font-semibold whitespace-nowrap"
           >
-            OnlyFrames
+            <Image src="/dripcast.png" alt="logo" width={40} height={40} className="w-6 h-9" />
+            Dripcast
           </Link>
         </div>
         <button
@@ -213,7 +215,7 @@ const Navbar = () => {
         </div>
         {!isLoggedIn ? (
           <button
-            className="hidden md:flex w-fit px-5 py-2 text-neutral-700 bg-gradient-to-tr from-teal-400 to-amber-400 rounded-lg hover:from-teal-500 hover:to-amber-500 hover:text-gray-50 hover:shadow-lg"
+            className="hidden md:flex w-fit px-5 py-2 text-neutral-800 bg-gradient-to-tr from-teal-400 to-sky-400 rounded-lg hover:from-teal-500 hover:to-sky-500 hover:text-gray-50 hover:shadow-lg"
             onClick={login}
             disabled={!ready && authenticated}
           >
@@ -222,7 +224,7 @@ const Navbar = () => {
         ) : (
           <div>
             <button
-              className="hidden md:block w-fit px-5 py-1.5 text-neutral-300 border border-teal-400 hover:border-amber-400 hover:bg-gradient-to-tr hover:from-teal-500 hover:to-amber-500 hover:text-gray-50 hover:shadow-lg rounded-lg"
+              className="hidden md:block w-fit px-5 py-1.5 text-neutral-300 border border-teal-400 hover:bg-gradient-to-tr hover:from-teal-500 hover:to-sky-500 hover:text-gray-50 hover:shadow-lg rounded-lg"
               onClick={toggleDropdown}
             >
               <span className="flex flex-row items-center gap-x-4">

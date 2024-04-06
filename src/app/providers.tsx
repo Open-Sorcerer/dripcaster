@@ -11,7 +11,7 @@ export default function Providers({children}: {children: React.ReactNode}) {
         appearance: {
           theme: 'dark',
           accentColor: '#676FFF',
-          logo: '/onlyframes.png',
+          logo: '/dripcast.png',
         },
         defaultChain: baseSepolia,
         loginMethods: ['farcaster'],
