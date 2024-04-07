@@ -47,6 +47,7 @@ const CreateProduct: NextPage = () => {
       name: name,
       image: contentUrl,
       description: description,
+      dripAddresses: selectedCards.map((card) => card.address),
     };
     const res = await fetch("/api/json", {
       method: "POST",
