@@ -19,6 +19,7 @@ const Card = ({ name, price, image, label, link }: Card) => {
             ? "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC"
             : image
         }
+        loader={({ src }) => src}
         alt={name}
         width={200}
         height={200}

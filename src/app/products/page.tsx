@@ -58,12 +58,14 @@ const Products: NextPage = () => {
     let products: Products[] = [];
     console.log(productsData);
     for (let product of productsData as any[]) {
+      const imageUrl = await fetch(`/api/fetch?url=${product.previewImageURI}`);
+      const image = await imageUrl.text();
       products.push({
         name: product.productName,
         price: formatEther(BigInt(product.price)),
         supply: product.supply.toString(),
         productAddress: product.productAddress,
-        image: product.productDataURI,
+        image: image,
       });
     }
     await soldUnits(products);
@@ -79,7 +81,7 @@ const Products: NextPage = () => {
           const product = products[index];
           const soldUnits = await publicClient.readContract({
             address: product.productAddress as "0xString",
-            abi: DripCasterABI,
+            abi: DripsABI,
             functionName: "soldUnits",
             args: [],
           });

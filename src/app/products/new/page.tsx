@@ -45,7 +45,7 @@ const CreateProduct: NextPage = () => {
   const uploadMetadata = async () => {
     const body = {
       name: name,
-      image: imageUrl,
+      image: contentUrl,
       description: description,
     };
     const res = await fetch("/api/json", {
@@ -53,7 +53,7 @@ const CreateProduct: NextPage = () => {
       body: JSON.stringify(body),
     });
     const data = await res.json();
-    return `https://gateway.pinata.cloud/ipfs/${data.hash}`;
+    return `https://ipfs.moralis.io:2053/ipfs/${data.hash}`;
   };
 
   const uploadProductImage = async (file: any) => {
@@ -68,7 +68,7 @@ const CreateProduct: NextPage = () => {
         body: formData,
       });
       const cid = await res.json();
-      setImageUrl(`https://gateway.pinata.cloud/ipfs/${cid.hash}`);
+      setImageUrl(`https://ipfs.moralis.io:2053/ipfs/${cid.hash}`);
       console.log(isImageUploading);
       setIsImageUploading(false);
     } catch (error) {
@@ -89,7 +89,7 @@ const CreateProduct: NextPage = () => {
         body: formData,
       });
       const cid = await res.json();
-      setContentUrl(`https://gateway.pinata.cloud/ipfs/${cid.hash}`);
+      setContentUrl(`https://ipfs.moralis.io:2053/ipfs/${cid.hash}`);
       setIsContentUploading(false);
     } catch (error) {
       console.log(error);
@@ -104,12 +104,12 @@ const CreateProduct: NextPage = () => {
       account: address,
       address: dripCastContractAddress,
       abi: DripCasterABI as Abi,
-      functionName: "createNFT",
+      functionName: "createDrip",
       args: [
         address,
         name,
+        imageUrl,
         metadataURL,
-        contentImage,
         amount,
         maxSupplyFlag,
         supply,
