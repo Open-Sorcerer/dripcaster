@@ -130,9 +130,9 @@ const Products: NextPage = () => {
             <div className="w-full flex flex-row justify-between items-center gap-3">
               <Link
                 className="px-5 py-3 text-neutral-800 font-medium bg-gradient-to-tr from-sky-400 to-teal-400 hover:from-sky-500 hover:to-teal-500 rounded-lg"
-                href="/claim"
+                href="/withdraw"
               >
-                Claim earnings
+                Withdraw funds
               </Link>
               <AddBtn />
             </div>
