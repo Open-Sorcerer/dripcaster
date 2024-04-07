@@ -4,59 +4,18 @@ import { NextPage } from "next";
 import { Checkbox, Input, Search, Upload } from "@/components";
 import Image from "next/image";
 import { useState } from "react";
-import { parseUnits } from "viem";
+import { Abi, parseEther, parseUnits } from "viem";
 import toast from "react-hot-toast";
-import { useAccount } from "wagmi";
-
-const collection = [
-  {
-    name: "Azuki Elementals",
-    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
-    address: "0x1234567890",
-  },
-  {
-    name: "Becaon",
-    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
-    address: "0x1234567890",
-  },
-  {
-    name: "James",
-    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
-    address: "0x1234567890",
-  },
-  {
-    name: "Die hard",
-    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
-    address: "0x1234567890",
-  },
-  {
-    name: "Zeo",
-    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
-    address: "0x1234567890",
-  },
-  {
-    name: "Milano",
-    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
-    address: "0x1234567890",
-  },
-  {
-    name: "Bored Ape",
-    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
-    address: "0x1234567890",
-  },
-  {
-    name: "Madlad",
-    image: "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC",
-    address: "0x1234567890",
-  },
-];
+import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { dripCastContractAddress } from "@/constant/constants";
+import { DripCasterABI } from "@/constant/abi";
+import { dripData } from "@/constant/dripData";
 
 const CreateProduct: NextPage = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [productImage, setProductImage] = useState<string>("");
   const [contentImage, setContentImage] = useState<string>("");
-  const [score, setScore] = useState<number>(0);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [contentUrl, setContentUrl] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
@@ -70,6 +29,8 @@ const CreateProduct: NextPage = () => {
   const [isImageUploading, setIsImageUploading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { address } = useAccount();
+
+  const { data, writeContractAsync, status, error } = useWriteContract();
 
   const handleCardSelect = (card: any) => {
     const isSelected = selectedCards.some((selectedCard) => selectedCard.name === card.name);
@@ -136,61 +97,32 @@ const CreateProduct: NextPage = () => {
     }
   };
 
-  async function createGate(name: string, address: string) {
-    const res = await fetch("/api/dynamic", {
-      method: "POST",
-      body: JSON.stringify({
-        name: name,
-        outcome: "scope",
-        rules: [
-          {
-            address: {
-              contractAddress: address,
-              networkId: 84532,
-            },
-            filter: {
-              amount: 1,
-            },
-            type: "nft",
-          },
-        ],
-        scope: "superuser",
-      }),
+  async function createProduct(metadataURL: string) {
+    setIsLoading(true);
+    const amount = parseUnits(price.toString(), 18);
+    await writeContractAsync({
+      account: address,
+      address: dripCastContractAddress,
+      abi: DripCasterABI as Abi,
+      functionName: "createNFT",
+      args: [
+        address,
+        name,
+        metadataURL,
+        contentImage,
+        amount,
+        maxSupplyFlag,
+        supply,
+        selectedCards.map((card) => card.address),
+      ],
     });
-    const data = await res.json();
-    toast.success("Token Gate created successfully", {
-      icon: "🔑",
+    toast.success("Product Created Successfully", {
+      icon: "🎉",
       style: {
         borderRadius: "10px",
       },
     });
-  }
-
-  async function createProduct(metadataURL: string) {
-    if (score > 60) {
-      setIsLoading(true);
-      // const signer = provider.getSigner();
-      // const podsContract = new ethers.Contract(podsContractAddress, podsABI, signer);
-      const amount = parseUnits(price.toString(), 18);
-      // const product = await podsContract.createProduct(
-      //   address,
-      //   name,
-      //   imageUrl,
-      //   metadataURL,
-      //   amount,
-      //   maxSupplyFlag,
-      //   supply,
-      // );
-      toast.success("Product Created Successfully", {
-        icon: "🎉",
-        style: {
-          borderRadius: "10px",
-        },
-      });
-      // const contractAddress = await podsContract.getProducts(wallet.address);
-      // await createGate(name, contractAddress[contractAddress.length - 1].productAddress);
-      setIsLoading(false);
-    }
+    setIsLoading(false);
   }
 
   return (
@@ -316,7 +248,7 @@ const CreateProduct: NextPage = () => {
           <Search.Dialog
             isEnabled={showDialog}
             setOutsideClick={setShowDialog}
-            collection={collection}
+            collection={dripData}
             selectedCards={selectedCards}
             onCardSelect={handleCardSelect}
           />

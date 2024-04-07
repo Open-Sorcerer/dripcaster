@@ -160,9 +160,9 @@ function SearchDialog({
             {filteredCollection.length === 0 ? (
               <p className="text-sky-400 text-lg">No collection found.</p>
             ) : (
-              filteredCollection.map((item: any) => (
+              filteredCollection.map((item: any, index) => (
                 <DripCard
-                  key={item.name}
+                  key={index}
                   name={item.name}
                   image={item.image}
                   address={item.address}

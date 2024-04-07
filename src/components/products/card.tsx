@@ -22,6 +22,7 @@ const DripCard = ({ name, image, address, isSelected, onSelect }: DripCard) => {
             ? "https://gateway.pinata.cloud/ipfs/QmUNoWAZh1nS7nqN1n4B56S87hNwmdrcrSf9JZEV4Q69hC"
             : image
         }
+        loader={({ src }) => src}
         alt={name}
         width={200}
         height={200}

@@ -1,12 +1,12 @@
 "use client";
 import { AddBtn, Card, StatsCard } from "@/components";
 import { publicClient } from "@/config";
+import { DripCasterABI, DripsABI } from "@/constant/abi";
+import { dripCastContractAddress } from "@/constant/constants";
 import { FarcasterIcon } from "@/icons";
-import { podsABI, podsContractAddress } from "@/constant";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { formatEther } from "viem";
-import { peasABI } from "@/constant";
 import { useAccount } from "wagmi";
 import Link from "next/link";
 
@@ -42,8 +42,8 @@ const Products: NextPage = () => {
     if (address) {
       try {
         const productsData = await publicClient.readContract({
-          address: podsContractAddress,
-          abi: podsABI,
+          address: dripCastContractAddress,
+          abi: DripCasterABI,
           functionName: "getProducts",
           args: [address],
         });
@@ -79,7 +79,7 @@ const Products: NextPage = () => {
           const product = products[index];
           const soldUnits = await publicClient.readContract({
             address: product.productAddress as "0xString",
-            abi: peasABI,
+            abi: DripCasterABI,
             functionName: "soldUnits",
             args: [],
           });
@@ -100,7 +100,7 @@ const Products: NextPage = () => {
           const product = products[index];
           const revenue = await publicClient.readContract({
             address: product.productAddress as "0xString",
-            abi: peasABI,
+            abi: DripsABI,
             functionName: "revenueGenerated",
             args: [],
           });
