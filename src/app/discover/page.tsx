@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import {NextPage} from 'next';
-import Head from 'next/head';
-import {useState} from 'react';
+import { NextPage } from "next";
+import Head from "next/head";
+import { useState } from "react";
 
 const Discover: NextPage = () => {
   const [products, setProducts] = useState([]);
@@ -12,8 +12,9 @@ const Discover: NextPage = () => {
     <>
       <Head>
         <title>Discover</title>
-        <meta name="description" content="Dripcast" />
+        <meta name="description" content="Dripcaster" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex flex-col w-full pt-36 pb-20 md:pt-32 md:pb-6 lg:py-28 px-10 md:px-24">
         <h1 className="text-2xl md:text-3xl text-gray-200 font-primary font-medium">

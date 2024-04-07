@@ -1,4 +1,4 @@
-## Dripcast
+## Dripcaster
 
 <img src="./public/dripcast.png" alt="logo" height="150" width="100">
 

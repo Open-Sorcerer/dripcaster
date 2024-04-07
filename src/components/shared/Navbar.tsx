@@ -25,10 +25,10 @@ const Navbar = () => {
         <div className="flex">
           <Link
             href="/"
-            className="flex flex-row gap-5 items-end text-2xl text-transparent bg-clip-text bg-gradient-to-b from-[#ffd84b] from-[20%] to-[#b67e2b] font-title font-semibold whitespace-nowrap"
+            className="flex flex-row items-start text-2xl text-transparent bg-clip-text bg-gradient-to-b from-gray-50 from-[20%] to-white font-title font-semibold whitespace-nowrap"
           >
-            <Image src="/dripcast.png" alt="logo" width={40} height={40} className="w-6 h-9" />
-            Dripcast
+            <Image src="/dripcaster.png" alt="logo" width={40} height={40} className="w-7 h-6" />
+            ripcaster
           </Link>
         </div>
         <button
