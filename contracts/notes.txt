@@ -1,8 +1,10 @@
 Deployed on BaseSepolia 
 
-DripCaster = "0xcF271719Ff9258637Db6e9E4C9b793e59FBc9827"
+DripCaster = "0xF5F7BCAb54AEA06A01837495dB74E8788295cE1d"
 
-Drips = "0x001323Cd1396C87b2E24c33dE6d5174cEE9A5635"
+Drips = "0x46d4fA6309Dc0d3bC551B4C47Cd870D8CC1282a7"
 
 Testing = "https://ipfs.moralis.io:2053/ipfs/Qma4X1NYjE5sA8Z6gYEQwentwAc11t2jXt9g3Lmh3b5P2r"
 
+
+communities = "["DGPTxgKaBPJv3Ng7dc9AFDpX6E7kgUMZEgyTm3VGWPW6","HZKEoezpMVutwqxEuffFGtN5BLdytZp27xL95ZvPiGPN"]"

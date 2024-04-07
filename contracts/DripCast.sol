@@ -97,6 +97,11 @@ contract DripsContract is ERC1155, Ownable, ERC1155Pausable, ERC1155Burnable, ER
     string public dataURI;
     string[] public discountedCommunities;
 
+    // return the entire array of discounted communities
+    function getDiscountedCommunities() public view returns (string[] memory) {
+        return discountedCommunities;
+    }
+
 
     constructor(
         address _productOwner, 
@@ -192,3 +197,5 @@ contract DripsContract is ERC1155, Ownable, ERC1155Pausable, ERC1155Burnable, ER
         super._update(from, to, ids, values);
     }
 }
+
+
