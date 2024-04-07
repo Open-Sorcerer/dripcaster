@@ -8,22 +8,20 @@ import { useEffect, useState } from "react";
 import { formatEther } from "viem";
 import { peasABI } from "@/constant";
 import { useAccount } from "wagmi";
+import Link from "next/link";
 
 const statsData = [
   {
     label: "Total Products",
     desc: "Total number of products you have in your store",
-    value: 16,
   },
   {
     label: "Total Sales",
     desc: "Total number of products sold",
-    value: 9,
   },
   {
     label: "Total Revenue",
     desc: "Total revenue generated from sales",
-    value: 569,
   },
 ];
 
@@ -36,10 +34,9 @@ interface Products {
 }
 
 const Products: NextPage = () => {
-  const [productsData, setProductsData] = useState<any>();
-  const [products, setProducts] = useState<any>([]);
-  const [totalSoldUnits, setTotalSoldUnits] = useState<any>([]);
-  const [totalRevenue, setTotalRevenue] = useState<any>([]);
+  const [products, setProducts] = useState<Products[]>([]);
+  const [totalSoldUnits, setTotalSoldUnits] = useState<number>(0);
+  const [totalRevenue, setTotalRevenue] = useState<number>(0);
   const { address } = useAccount();
   const readData = async () => {
     if (address) {
@@ -69,9 +66,9 @@ const Products: NextPage = () => {
         image: product.productDataURI,
       });
     }
-    soldUnits(products);
+    await soldUnits(products);
     setProducts(products as any);
-    revenueShare(products);
+    await revenueShare(products);
   };
 
   const soldUnits = async (products: Products[]) => {
@@ -88,7 +85,7 @@ const Products: NextPage = () => {
           });
           total += Number(soldUnits);
         }
-        setTotalSoldUnits(total as Number);
+        setTotalSoldUnits(total);
       } catch (e) {
         console.log(e);
       }
@@ -109,7 +106,7 @@ const Products: NextPage = () => {
           });
           total += Number(formatEther(revenue as bigint));
         }
-        setTotalRevenue(total as Number);
+        setTotalRevenue(total);
       } catch (e) {
         console.log(e);
       }
@@ -130,7 +127,13 @@ const Products: NextPage = () => {
         </div>
         {address ? (
           <>
-            <div className="w-full flex flex-col sm:flex-row justify-end items-center z-0">
+            <div className="w-full flex flex-row justify-between items-center gap-3">
+              <Link
+                className="px-5 py-3 text-neutral-800 font-medium bg-gradient-to-tr from-sky-400 to-teal-400 hover:from-sky-500 hover:to-teal-500 rounded-lg"
+                href="/claim"
+              >
+                Claim earnings
+              </Link>
               <AddBtn />
             </div>
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 justify-evenly items-center gap-4">
@@ -146,9 +149,9 @@ const Products: NextPage = () => {
               />
               <StatsCard label={statsData[2].label} desc={statsData[2].desc} value={totalRevenue} />
             </div>
-            <div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-8">
+            <div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-8 self-start items-start justify-start">
               {products.length === 0 ? (
-                <p className="text-teal-400 text-lg">No products listed yet.</p>
+                <p className="text-sky-400/80 text-lg">No products listed yet.</p>
               ) : (
                 products.map((product: any, index: any) => (
                   <Card
