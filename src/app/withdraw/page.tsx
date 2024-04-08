@@ -20,10 +20,10 @@ const config: WormholeConnectConfig = {
   env: "mainnet",
   networks: ["base", "solana"],
   // tokens: ["ETH", "USDC"],
-  rpcs: {
-    base: "https://rpc.ankr.com/base",
-    solana: "https://rpc.ankr.com/solana",
-  },
+  // rpcs: {
+  //   base: "https://rpc.ankr.com/base",
+  //   solana: "https://rpc.ankr.com/solana",
+  // },
 };
 
 const Withdraw = () => {
