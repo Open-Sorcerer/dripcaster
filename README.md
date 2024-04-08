@@ -9,7 +9,7 @@ Unlocking Farcaster powered e-commerce for Drip Creators
 - It is a platform for Drip creators to sell digital products (videos, e-books, art) via Farcaster Frames.
 - Users can discover and purchase these digital assets by minting Access NFTs, which grant them access to the purchased content.
 
-[Frames Repsoitory](https://github.com/Open-Sorcerer/dripcast/)
+[Frames Repository](https://github.com/Open-Sorcerer/dripcast/)
 
 ### How does it work?
 
@@ -21,6 +21,7 @@ Unlocking Farcaster powered e-commerce for Drip Creators
 
 - We are allowing the minting of Access NFTs via Farcaster Frames. 
 - The NFTs are minted on Solana and Base. 
+- We are using the latest Core standard introduced by Metaplex for Solana NFTs.
 - We are using Wormhole to enable cross-chain compatibility. 
 
 ### Future Features
