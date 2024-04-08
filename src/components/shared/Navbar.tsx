@@ -2,10 +2,16 @@
 "use client";
 
 import { ConnectKitButton } from "connectkit";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+
+const WalletMultiButtonDynamic = dynamic(
+  async () => (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
+  { ssr: false },
+);
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -110,11 +116,15 @@ const Navbar = () => {
             </li>
           </ul>
           <span className="flex md:hidden">
-            <ConnectKitButton />
+            {pathname?.includes("/sol/product") ? (
+              <WalletMultiButtonDynamic />
+            ) : (
+              <ConnectKitButton />
+            )}
           </span>
         </div>
         <span className="hidden md:flex">
-          <ConnectKitButton />
+          {pathname?.includes("/sol/product") ? <WalletMultiButtonDynamic /> : <ConnectKitButton />}{" "}
         </span>
       </div>
     </nav>
