@@ -19,7 +19,7 @@ const WormholeConnect = dynamic(
 const config: WormholeConnectConfig = {
   env: "mainnet",
   networks: ["base", "solana"],
-  tokens: ["ETH", "USDC"],
+  // tokens: ["ETH", "USDC"],
   rpcs: {
     base: "https://rpc.ankr.com/base",
     solana: "https://rpc.ankr.com/solana",
