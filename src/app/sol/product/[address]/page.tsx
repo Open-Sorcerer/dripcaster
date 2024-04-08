@@ -33,18 +33,10 @@ const Product = ({ params }: { params: { address: string } }) => {
       abi: DripsABI,
       client: publicClient,
     });
-
-    const nfts = await dripContract.read.balanceOf([address, 1]);
-    const ata = await getAssociatedTokenAddress(
-      new PublicKey("88gBicCpxVJQt6hvmqyaMyMz9whNbVVLqEysaLgvchN8"),
-      new PublicKey("BGfybQ2uFGPmCscCPAgJtBFXDWc5GNqzymSq3AAo6Nvi"),
-    );
-    console.log(ata.toBase58());
     const productURL = await dripContract.read.dataURI();
     const previewImageURI = await dripContract.read.previewImageURI();
     setMetadataUrl(previewImageURI as string);
-    console.log(Number(nfts));
-    if (Number(nfts) > 0 && productURL) {
+    if (productURL) {
       setShowContent(true);
       setProductDataURL(productURL as string);
       const metadataResponse = await fetch(`/api/fetch?url=${previewImageURI}`);
