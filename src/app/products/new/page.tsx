@@ -10,6 +10,8 @@ import { useAccount, useWriteContract } from "wagmi";
 import { dripCastContractAddress } from "@/constant";
 import { DripCasterABI } from "@/constant/abi";
 import { dripData } from "@/constant/dripData";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletName } from "@solana/wallet-adapter-base";
 
 const CreateProduct: NextPage = () => {
   const [name, setName] = useState<string>("");
@@ -29,6 +31,7 @@ const CreateProduct: NextPage = () => {
   const [isImageUploading, setIsImageUploading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { address } = useAccount();
+  const { select, wallets, publicKey, disconnect, connected, connect, wallet } = useWallet();
 
   const { data, writeContractAsync, status, error } = useWriteContract();
 
@@ -146,7 +149,7 @@ const CreateProduct: NextPage = () => {
                 id="image"
                 name="image"
                 type="file"
-                label="Upload Product"
+                label="Upload Preview"
                 onChange={(e) => {
                   uploadProductImage(e.target.files[0]);
                 }}
@@ -237,6 +240,32 @@ const CreateProduct: NextPage = () => {
               : isLoading
                 ? "Getting your product ready..."
                 : "Add product 🚀"}
+          </button>
+          <button
+            className="w-full text-neutral-900 hover:text-neutral-800 bg-gradient-to-tr from-teal-400 to-sky-500 hover:from-teal-300 hover:to-sky-400 rounded-lg px-5 py-2.5 text-center font-medium shadow disabled:opacity-75 disabled:cursor-progress"
+            onClick={async (e) => {
+              e.preventDefault();
+              if (!connected) {
+                const availableWallets = wallets.map((wallet) => wallet.adapter.name);
+                if (availableWallets.includes("Backpack" as WalletName)) {
+                  select("Backpack" as WalletName);
+                } else if (availableWallets.includes("Phantom" as WalletName)) {
+                  select("Phantom" as WalletName);
+                } else {
+                  toast.error("Please install Phantom or Backpack wallet to connect", {
+                    icon: "🔒",
+                    style: {
+                      borderRadius: "10px",
+                    },
+                  });
+                }
+                await wallet?.adapter.connect();
+              } else {
+                await disconnect();
+              }
+            }}
+          >
+            {connected ? `${publicKey?.toBase58()}` : "Connect your SOL Wallet"}
           </button>
           <Search.Dialog
             isEnabled={showDialog}
