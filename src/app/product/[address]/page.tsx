@@ -33,7 +33,13 @@ const Preview = ({ params }: { params: { address: string } }) => {
     }
   }, [address]);
 
-  return <>{showContent ? <h1>Content is available</h1> : <h1>Content is not available</h1>}</>;
+  return (
+    <div className="w-full pt-20 pb-5 px-5 md:px-40">
+      <div className="flex flex-col gap-3 text-sky-400">
+        {showContent ? <h1>Content is available</h1> : <h1>Content is not available</h1>}
+      </div>
+    </div>
+  );
 };
 
 export default Preview;

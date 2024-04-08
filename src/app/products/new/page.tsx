@@ -1,13 +1,13 @@
 "use client";
 
 import { NextPage } from "next";
-import { Checkbox, Input, Search, Upload } from "@/components";
+import { Checkbox, Input, Preview, Search, Upload } from "@/components";
 import Image from "next/image";
 import { useState } from "react";
-import { Abi, parseEther, parseUnits } from "viem";
+import { Abi, parseUnits } from "viem";
 import toast from "react-hot-toast";
-import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { dripCastContractAddress } from "@/constant/constants";
+import { useAccount, useWriteContract } from "wagmi";
+import { dripCastContractAddress } from "@/constant";
 import { DripCasterABI } from "@/constant/abi";
 import { dripData } from "@/constant/dripData";
 
@@ -15,7 +15,7 @@ const CreateProduct: NextPage = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [productImage, setProductImage] = useState<string>("");
-  const [contentImage, setContentImage] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
   const [contentUrl, setContentUrl] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
@@ -70,7 +70,6 @@ const CreateProduct: NextPage = () => {
       });
       const cid = await res.json();
       setImageUrl(`https://ipfs.moralis.io:2053/ipfs/${cid.hash}`);
-      console.log(isImageUploading);
       setIsImageUploading(false);
     } catch (error) {
       console.log(error);
@@ -78,10 +77,9 @@ const CreateProduct: NextPage = () => {
     }
   };
 
-  const uploadContentImage = async (file: any) => {
+  const uploadContent = async (file: any) => {
     setIsContentUploading(true);
-    const image = URL.createObjectURL(file);
-    setContentImage(image);
+    setContent(file);
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -155,20 +153,14 @@ const CreateProduct: NextPage = () => {
               />
             </div>
             <div className="flex flex-col items-center justify-center gap-5 mb-5">
-              <Image
-                className="mx-auto w-[14rem] h-[14rem] bg-gradient-to-bl from-teal-500 to-sky-400 rounded-lg object-fill"
-                src={contentImage !== "" ? contentImage : "/images/preview.png"}
-                alt="preview"
-                width={200}
-                height={200}
-              />
+              <Preview content={content} />
               <Upload
                 id="content"
                 name="content"
                 type="file"
-                label="Upload Preview"
+                label="Upload File"
                 onChange={(e) => {
-                  uploadContentImage(e.target.files[0]);
+                  uploadContent(e.target.files[0]);
                 }}
               />
             </div>

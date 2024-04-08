@@ -21,7 +21,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-opacity-20 backdrop-filter backdrop-blur-md mx-5 md:mx-16 lg:mx-20 md:px-10 my-2 border border-neutral-600 bg-[#141414]/40 rounded-xl">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
+      <div className="max-w-screen-3xl flex flex-wrap items-center justify-between p-4">
         <div className="flex">
           <Link
             href="/"
@@ -64,34 +64,34 @@ const Navbar = () => {
                 href="/"
                 className={`block py-2 px-3 ${
                   pathname === "/"
-                    ? "text-[#34d399] hover:text-white"
-                    : "text-gray-300 hover:text-[#34d399]"
-                } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-[#34d399] md:p-0`}
+                    ? "text-teal-400 hover:text-white"
+                    : "text-gray-300 hover:text-teal-400"
+                } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-teal-400 md:p-0`}
                 aria-current="page"
               >
                 Home
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 href="/discover"
                 className={`block py-2 px-3 ${
                   pathname === "/discover"
-                    ? "text-[#34d399] hover:text-white"
-                    : "text-gray-300 hover:text-[#34d399]"
-                } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-[#34d399] md:p-0`}
+                    ? "text-teal-400 hover:text-white"
+                    : "text-gray-300 hover:text-teal-400"
+                } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-teal-400 md:p-0`}
               >
                 Discover
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 href="/products/new"
                 className={`block py-2 px-3 ${
                   pathname === "/products/new"
-                    ? "text-[#34d399] hover:text-white"
-                    : "text-gray-300 hover:text-[#34d399]"
-                } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-[#34d399] md:p-0`}
+                    ? "text-teal-400 hover:text-white"
+                    : "text-gray-300 hover:text-teal-400"
+                } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-teal-400 md:p-0`}
               >
                 Create
               </Link>
@@ -101,9 +101,9 @@ const Navbar = () => {
                 href="/products"
                 className={`block py-2 px-3 ${
                   pathname === "/products"
-                    ? "text-[#34d399] hover:text-white"
-                    : "text-gray-300 hover:text-[#34d399]"
-                } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-[#34d399] md:p-0`}
+                    ? "text-teal-400 hover:text-white"
+                    : "text-gray-300 hover:text-teal-400"
+                } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-teal-400 md:p-0`}
               >
                 Products
               </Link>

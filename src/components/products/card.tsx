@@ -13,7 +13,7 @@ interface DripCard {
 const DripCard = ({ name, image, address, isSelected, onSelect }: DripCard) => {
   return (
     <div
-      className={`flex flex-col w-[10rem] bg-[#141414] bg-opacity-20 backdrop-filter backdrop-blur-sm rounded-xl shadow-md p-3 cursor-pointer ${isSelected ? "border border-amber-400" : ""}`}
+      className={`flex flex-col w-[10rem] bg-[#080808] bg-opacity-50 backdrop-filter backdrop-blur-sm rounded-xl shadow-md p-3 cursor-pointer ${isSelected ? "border border-amber-400" : ""}`}
       onClick={onSelect}
     >
       <Image
@@ -28,7 +28,7 @@ const DripCard = ({ name, image, address, isSelected, onSelect }: DripCard) => {
         height={200}
         className="object-fill bg-sky-400/50 w-[10rem] h-[8rem] rounded-xl"
       />
-      <h2 className="text-sm text-teal-500 font-primary font-medium truncate mt-3">{name}</h2>
+      <h2 className="text-sm text-sky-100 font-primary font-medium truncate mt-3">{name}</h2>
     </div>
   );
 };

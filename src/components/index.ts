@@ -7,5 +7,19 @@ import Input from "./form/input";
 import Upload from "./form/upload";
 import Search from "./products/search";
 import DripCard from "./products/card";
+import Spinner from "./shared/spinner";
+import Preview from "./products/preview";
 
-export { Navbar, StatsCard, AddBtn, Card, Checkbox, Input, Upload, Search, DripCard };
+export {
+  Navbar,
+  StatsCard,
+  AddBtn,
+  Card,
+  Checkbox,
+  Input,
+  Upload,
+  Search,
+  DripCard,
+  Spinner,
+  Preview,
+};
