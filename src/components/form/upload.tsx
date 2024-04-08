@@ -12,7 +12,7 @@ interface IUpload {
 
 const Upload = ({ id, name, type, accept, label, onChange }: IUpload) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col font-primary">
       <button className="p-0 w-[180px] d-block h-[40px] relative rounded-[10px] text-black bg-gray-200 border border-gray-200 hover:bg-gray-300 font-bold overflow-hidden hover:cursor-pointer">
         <div className="relative h-full flex items-center font-medium justify-center">
           <UploadIcon className="w-4 h-4 text-neutral-700 mr-2" /> {label}

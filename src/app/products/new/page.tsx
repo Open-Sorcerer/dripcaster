@@ -1,7 +1,7 @@
 "use client";
 
 import { NextPage } from "next";
-import { Checkbox, Input, Preview, Search, Upload } from "@/components";
+import { Checkbox, Input, ContentPreview, Search, Upload } from "@/components";
 import Image from "next/image";
 import { useState } from "react";
 import { Abi, parseUnits } from "viem";
@@ -153,7 +153,7 @@ const CreateProduct: NextPage = () => {
               />
             </div>
             <div className="flex flex-col items-center justify-center gap-5 mb-5">
-              <Preview content={content} />
+              <ContentPreview content={content} />
               <Upload
                 id="content"
                 name="content"

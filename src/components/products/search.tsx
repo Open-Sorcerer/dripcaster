@@ -113,7 +113,7 @@ function SearchDialog({
       ];
   return (
     <Dialog isEnabled={isEnabled} setOutsideClick={setOutsideClick}>
-      <div className="w-[90vw] md:w-[70vw] h-[70vh] md:h-full overflow-y-scroll rounded-lg bg-[#1c1c1c] text-left shadow-xl">
+      <div className="w-[90vw] md:w-[70vw] h-[70vh] md:h-full overflow-y-scroll rounded-lg bg-[#1c1c1c] text-left font-primary shadow-xl">
         <div className="relative w-full">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <svg

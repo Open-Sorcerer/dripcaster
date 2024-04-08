@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ICheckbox {
   id: string;
@@ -10,9 +10,9 @@ interface ICheckbox {
   disabled?: boolean;
 }
 
-const Checkbox = ({id, name, label, onChange, helper, defaultChecked, disabled}: ICheckbox) => {
+const Checkbox = ({ id, name, label, onChange, helper, defaultChecked, disabled }: ICheckbox) => {
   return (
-    <div className="inline-flex items-center">
+    <div className="inline-flex font-primary items-center">
       <input
         id={id}
         name={name}

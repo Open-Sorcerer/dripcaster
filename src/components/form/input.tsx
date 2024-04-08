@@ -25,13 +25,13 @@ const Input = ({ id, name, label, placeholder, type, onChange, value, helper }: 
         id={id}
         name={name}
         onChange={onChange}
-        className="mt-2 bg-[#141414]/20 border border-neutral-500 text-neutral-200 text-sm placeholder:text-neutral-500 rounded-lg focus:border-neutral-300 focus:ring-neutral-300 active:border-neutral-400 active:ring-neutral-400 block w-full p-2.5"
+        className="mt-2 bg-[#141414]/20 font-primary border border-neutral-500 text-neutral-200 text-sm placeholder:text-neutral-500 rounded-lg focus:border-neutral-300 focus:ring-neutral-300 active:border-neutral-400 active:ring-neutral-400 block w-full p-2.5"
         placeholder={placeholder}
         type={type}
         value={value}
         required
       />
-      <div className="text-sm mt-1 text-neutral-400">{helper}</div>
+      <div className="text-sm mt-1 font-primary text-neutral-400">{helper}</div>
     </div>
   );
 };

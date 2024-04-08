@@ -1,8 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const Preview = ({ content }: any) => {
-  // Function to determine the type of content and render accordingly
+const ContentPreview = ({ content }: any) => {
   const renderPreview = () => {
     if (content) {
       if (
@@ -57,4 +56,4 @@ const Preview = ({ content }: any) => {
   return <div>{renderPreview()}</div>;
 };
 
-export default Preview;
+export default ContentPreview;

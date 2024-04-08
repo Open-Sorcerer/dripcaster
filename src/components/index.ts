@@ -8,7 +8,8 @@ import Upload from "./form/upload";
 import Search from "./products/search";
 import DripCard from "./products/card";
 import Spinner from "./shared/spinner";
-import Preview from "./products/preview";
+import ContentPreview from "./products/preview";
+import Preview from "./shared/preview";
 
 export {
   Navbar,
@@ -21,5 +22,6 @@ export {
   Search,
   DripCard,
   Spinner,
+  ContentPreview,
   Preview,
 };
