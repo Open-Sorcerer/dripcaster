@@ -12,6 +12,8 @@ import { DripCasterABI } from "@/constant/abi";
 import { dripData } from "@/constant/dripData";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletName } from "@solana/wallet-adapter-base";
+import { createCollection } from "@/utils/collection";
+import { PublicKey } from "@metaplex-foundation/umi";
 
 const CreateProduct: NextPage = () => {
   const [name, setName] = useState<string>("");
@@ -31,6 +33,8 @@ const CreateProduct: NextPage = () => {
   const [isContentUploading, setIsContentUploading] = useState<boolean>(false);
   const [isImageUploading, setIsImageUploading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [fileType, setFileType] = useState<string>("");
+  const [collectionAddress, setCollectionAddress] = useState<string>("");
   const { address } = useAccount();
   const { select, wallets, publicKey, disconnect, connected, connect, wallet } = useWallet();
 
@@ -46,13 +50,26 @@ const CreateProduct: NextPage = () => {
     }
   };
 
-  const uploadMetadata = async () => {
-    const body = {
-      name: name,
-      image: contentUrl,
-      description: description,
-      dripAddresses: selectedCards.map((card) => card.address),
-    };
+  const uploadMetadata = async (collectionAddress?: string) => {
+    let body;
+    if (collectionAddress) {
+      body = {
+        name: name,
+        image: imageUrl,
+        description: description,
+        dripAddresses: selectedCards.map((card) => card.address),
+        collectionAddress: collectionAddress,
+        fileType: fileType,
+      };
+    } else {
+      body = {
+        name: name,
+        image: imageUrl,
+        description: description,
+        dripAddresses: selectedCards.map((card) => card.address),
+        fileType: fileType,
+      };
+    }
     const res = await fetch("/api/json", {
       method: "POST",
       body: JSON.stringify(body),
@@ -84,6 +101,16 @@ const CreateProduct: NextPage = () => {
   const uploadContent = async (file: any) => {
     setIsContentUploading(true);
     setContent(file);
+    const fileEnd = file.name.split(".").pop();
+    const type = ["jpg", "jpeg", "png", "gif", "svg", "webp"].includes(fileEnd)
+      ? "image"
+      : ["mp4", "webm", "ogg", "mov", "avi", "flv", "wmv", "mkv"].includes(file)
+        ? "video"
+        : fileEnd === "pdf"
+          ? "pdf"
+          : "file";
+    console.log(type);
+    setFileType(type);
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -111,7 +138,7 @@ const CreateProduct: NextPage = () => {
       args: [
         address,
         name,
-        imageUrl,
+        contentUrl,
         metadataURL,
         amount,
         maxSupplyFlag,
@@ -258,7 +285,16 @@ const CreateProduct: NextPage = () => {
             onClick={async (e) => {
               e.preventDefault();
               if (address) {
-                const metadataURL = await uploadMetadata();
+                let metadataURL = await uploadMetadata();
+                let collectionAddress;
+                if (publicKey) {
+                  const collection = await createCollection({
+                    name: name,
+                    creator: publicKey.toBase58() as PublicKey,
+                    metadataUrl: metadataURL,
+                  });
+                  metadataURL = await uploadMetadata(collection);
+                }
                 createProduct(metadataURL);
               } else {
                 toast.error("Please connect your wallet to create a product", {

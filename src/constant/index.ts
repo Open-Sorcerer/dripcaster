@@ -1,5 +1,5 @@
 // deployed on base sepolia
-export const dripCastContractAddress = "0xcF271719Ff9258637Db6e9E4C9b793e59FBc9827";
+export const dripCastContractAddress = "0x1311521D455E6E44D1F4B10a5Aa9B9F83C618B5A";
 
 export const statsData = [
   {

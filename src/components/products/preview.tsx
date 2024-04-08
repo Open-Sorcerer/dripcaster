@@ -56,4 +56,4 @@ const ContentPreview = ({ content }: any) => {
   return <div>{renderPreview()}</div>;
 };
 
-export default ContentPreview;
+export default React.memo(ContentPreview);

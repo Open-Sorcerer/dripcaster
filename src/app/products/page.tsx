@@ -47,16 +47,17 @@ const Products: NextPage = () => {
     let products: Products[] = [];
     for (let product of productsData as any[]) {
       const imageUrl = await fetch(`/api/fetch?url=${product.previewImageURI}`);
-      const image = await imageUrl.text();
+      const image = (await imageUrl.json()) as { image: string };
       products.push({
         name: product.productName,
         price: formatEther(BigInt(product.price)),
         supply: product.supply.toString(),
         productAddress: product.productAddress,
-        image: image,
+        image: image.image,
       });
     }
     await soldUnits(products);
+    console.log(products);
     setProducts(products as any);
     await revenueShare(products);
   };

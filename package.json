@@ -13,7 +13,11 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@metaplex-foundation/mpl-core": "^0.4.4",
+    "@metaplex-foundation/umi": "^0.9.1",
+    "@metaplex-foundation/umi-bundle-defaults": "^0.9.1",
     "@pinata/sdk": "^2.1.0",
+    "@solana/spl-token": "^0.4.3",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.35",
