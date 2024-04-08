@@ -31,7 +31,7 @@ const Card = ({ name, price, image, label, link }: Card) => {
         <button
           onClick={() =>
             window.open(
-              `https://warpcast.com/~/compose?embeds[]=https://onlyframe.vercel.app/frames?address=${link}`,
+              `https://warpcast.com/~/compose?embeds[]=https://dripcast.vercel.app/frames?address=${link}`,
               "_blank",
             )
           }
