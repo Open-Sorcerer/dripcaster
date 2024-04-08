@@ -6,15 +6,19 @@ import {
 } from "@metaplex-foundation/umi";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { createV1, createCollectionV1 } from "@metaplex-foundation/mpl-core";
-import { secretKey } from "../../secretKey";
 
 const umi = createUmi(
   "https://devnet.helius-rpc.com/?api-key=b8faf699-a3b6-4697-9a58-31d044390459",
 );
 
-const myKeypair = umi.eddsa.createKeypairFromSecretKey(Uint8Array.from(secretKey));
+const secretKey: string = process.env.NEXT_PUBLIC_SECRET_KEY || "";
+const secretKeyArray = new Uint8Array(secretKey.split(",").map((x) => parseInt(x)));
+
+const myKeypair = umi.eddsa.createKeypairFromSecretKey(Uint8Array.from(secretKeyArray));
 
 const myKeypairSigner = createSignerFromKeypair(umi, myKeypair);
+
+console.log("My Address", myKeypairSigner.publicKey.toString());
 
 umi.use(signerIdentity(myKeypairSigner));
 
