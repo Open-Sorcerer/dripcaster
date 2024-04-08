@@ -1,11 +1,10 @@
 "use client";
 
-import { Preview } from "@/components";
 import { publicClient } from "@/config";
 import { DripsABI } from "@/constant/abi";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getContract, parseUnits } from "viem";
+import { getContract } from "viem";
 import { useAccount } from "wagmi";
 import { PublicKey, Connection } from "@solana/web3.js";
 import { PublicKey as MetaPlexPublicKey } from "@metaplex-foundation/umi";
@@ -145,23 +144,7 @@ const Product = ({ params }: { params: { address: string } }) => {
               <p className="text-lg text-teal-400 font-medium">0.1</p>
             </div>
             <button
-              onClick={async () => {
-                if (!publicKey) {
-                  return;
-                }
-                console.log("collectionAddress", collectionAddress);
-                const nft = await createNFTOfCollection({
-                  collectionAddress:
-                    "88gBicCpxVJQt6hvmqyaMyMz9whNbVVLqEysaLgvchN8" as MetaPlexPublicKey,
-                  newOwner: publicKey.toBase58() as MetaPlexPublicKey,
-                  metadataUrl: metadataUrl,
-                  name: name,
-                });
-                console.log(nft);
-                if (nft) {
-                  toast.success("NFT created successfully");
-                }
-              }}
+              onClick={sendUSDCOnSOl}
               className="w-[8rem] h-10 bg-gradient-to-r from-amber-300 to-amber-400 text-neutral-800 font-semibold rounded-lg mt-4"
             >
               Buy
