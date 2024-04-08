@@ -37,7 +37,7 @@ const Product = ({ params }: { params: { address: string } }) => {
 
   return (
     <div className="w-full h-full pt-20 pb-5 px-5 md:px-40">
-      <div className="flex flex-col gap-3 text-sky-400 items-center justify-center">
+      <div className="flex flex-col mt-5 gap-3 text-sky-400 items-center justify-center">
         {showContent ? <h1>Content is available</h1> : <h1>Content is not available</h1>}
         {/* <Preview content={""} type="none" /> */}
         <div className="flex flex-col md:flex-row gap-5 bg-[#080808] bg-opacity-30 w-fit p-10 rounded-xl">

@@ -23,6 +23,7 @@ const CreateProduct: NextPage = () => {
   const [price, setPrice] = useState<number>(0);
   const [supply, setSupply] = useState<number>(10);
   const [showDialog, setShowDialog] = useState<boolean>(false);
+  const [registerOnSolana, setRegisterOnSolana] = useState<boolean>(false);
   const [selectedCards, setSelectedCards] = useState<
     { name: string; image: string; address: string }[]
   >([]);
@@ -217,6 +218,42 @@ const CreateProduct: NextPage = () => {
             onChange={(e) => setPrice(e.target.value)}
             helper="Recommend to set product price (in ETH)"
           />
+          <span className="flex flex-col md:flex-row justify-between">
+            <Checkbox
+              id="registerOnSolana"
+              name="registerOnSolana"
+              label="Register on Solana"
+              onChange={(e) => setRegisterOnSolana(e.target.checked)}
+            />
+            {registerOnSolana && (
+              <button
+                className="w-[20rem] text-neutral-100 hover:text-neutral-50 bg-gradient-to-tr from-teal-500 to-violet-500 hover:from-teal-400 hover:to-violet-600 rounded-lg px-5 py-2.5 text-center truncate font-medium shadow"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  if (!connected) {
+                    const availableWallets = wallets.map((wallet) => wallet.adapter.name);
+                    if (availableWallets.includes("Backpack" as WalletName)) {
+                      select("Backpack" as WalletName);
+                    } else if (availableWallets.includes("Phantom" as WalletName)) {
+                      select("Phantom" as WalletName);
+                    } else {
+                      toast.error("Please install Phantom or Backpack wallet to connect", {
+                        icon: "🔒",
+                        style: {
+                          borderRadius: "10px",
+                        },
+                      });
+                    }
+                    await wallet?.adapter.connect();
+                  } else {
+                    await disconnect();
+                  }
+                }}
+              >
+                {connected ? `${publicKey?.toBase58()}` : "Connect your SOL Wallet"}
+              </button>
+            )}
+          </span>
           <button
             onClick={async (e) => {
               e.preventDefault();
@@ -240,32 +277,6 @@ const CreateProduct: NextPage = () => {
               : isLoading
                 ? "Getting your product ready..."
                 : "Add product 🚀"}
-          </button>
-          <button
-            className="w-full text-neutral-900 hover:text-neutral-800 bg-gradient-to-tr from-teal-400 to-sky-500 hover:from-teal-300 hover:to-sky-400 rounded-lg px-5 py-2.5 text-center font-medium shadow disabled:opacity-75 disabled:cursor-progress"
-            onClick={async (e) => {
-              e.preventDefault();
-              if (!connected) {
-                const availableWallets = wallets.map((wallet) => wallet.adapter.name);
-                if (availableWallets.includes("Backpack" as WalletName)) {
-                  select("Backpack" as WalletName);
-                } else if (availableWallets.includes("Phantom" as WalletName)) {
-                  select("Phantom" as WalletName);
-                } else {
-                  toast.error("Please install Phantom or Backpack wallet to connect", {
-                    icon: "🔒",
-                    style: {
-                      borderRadius: "10px",
-                    },
-                  });
-                }
-                await wallet?.adapter.connect();
-              } else {
-                await disconnect();
-              }
-            }}
-          >
-            {connected ? `${publicKey?.toBase58()}` : "Connect your SOL Wallet"}
           </button>
           <Search.Dialog
             isEnabled={showDialog}
