@@ -4,14 +4,16 @@
 
 Unlocking Farcaster powered e-commerce for Drip Creators
 
+[Pitch Deck](https://pitch.com/v/dripcaster-7h46km)
+
+[Frames Repository](https://github.com/Open-Sorcerer/dripcast/)
+
+[Demo Video](https://www.youtube.com/watch?v=woFPcpn71uw)
+
 ### What does it do
 
 - It is a platform for Drip creators to sell digital products (videos, e-books, art) via Farcaster Frames.
 - Users can discover and purchase these digital assets by minting Access NFTs, which grant them access to the purchased content.
-
-[Pitch Deck](https://pitch.com/v/dripcaster-7h46km)
-[Frames Repository](https://github.com/Open-Sorcerer/dripcast/)
-[Demo Video](https://www.youtube.com/watch?v=woFPcpn71uw)
 
 ### How does it work?
 
